@@ -501,57 +501,89 @@ Below is the refactored version of the test script with comments explaining the 
     let browser;
 
     before(async function() {
+
         this.timeout(20000); // Increase timeout to 20 seconds
 
         // Initialize browser session
+
         browser = await remote({
+
             logLevel: 'error',
+
             path: '/',
+
             port: 9516,
+
             capabilities: {
+
                 browserName: 'chrome',
+
                 'goog:chromeOptions': {
+
                     args: ['--headless', '--disable-gpu']
+
                 }
+
             }
+
         });
+
     });
 
     after(async function() {
+
         if (browser) {
+
             await browser.deleteSession();
+
         }
+
     });
 
     describe('Login Feature', function() {
+
         it('should login successfully with valid credentials', async function() {
+
             this.timeout(30000); // Increase timeout to 30 seconds
 
             // Navigate to login page
+
             await browser.url('http://localhost:3000/login');
 
             // Wait for the login form to be displayed
+
             const loginForm = await browser.$('#loginForm');
+
             await loginForm.waitForDisplayed();
 
             // Enter username
+
             const usernameInput = await browser.$('#username');
+
             await usernameInput.setValue('testuser');
 
             // Enter password
+
             const passwordInput = await browser.$('#password');
+
             await passwordInput.setValue('password123');
 
             // Click login button
+
             const loginButton = await browser.$('#loginButton');
+
             await loginButton.click();
 
             // Wait for the dashboard to be displayed
+
             const dashboard = await browser.$('#dashboard');
+
             await dashboard.waitForDisplayed();
 
             // Assert that the dashboard is displayed
+
             const isDashboardDisplayed = await dashboard.isDisplayed();
+            
             assert.strictEqual(isDashboardDisplayed, true, 'Dashboard should be displayed after login');
         });
     });
@@ -595,5 +627,50 @@ By implementing these changes, the test script should be more reliable and less 
 
 flaky test script:
 
+Steps to Install Flasky from GitHub
+Clone the Repository: Open your terminal or command prompt and run:
+
+
+        --git clone https://github.com/miguelgrinberg/flasky.git
+
+Navigate to the Project Directory:
+
+
+        --cd flasky
+
+Create a Python Virtual Environment (Optional but Recommended):
+
+
+        --python -m venv venv
+
+        --source venv/bin/activate  # On macOS/Linux
+
+        --venv\Scripts\activate     # On Windows
+
+Install the Required Dependencies: Use pip to install the dependencies listed in the requirements.txt file:
+
+
+        --pip install -r requirements.txt
+
+Run the Application: You can start the Flask application using:
+
+
+        --flask run
+
+If the flask command isn’t recognized, ensure the virtual environment is activated.
+
+Access the Application: Open your web browser and navigate to:
+
 Login Page URL:
+
+
+        http://127.0.0.1:5000
+
+![Flasky output](image-2.png)
+
+
+
+
+
+
 
